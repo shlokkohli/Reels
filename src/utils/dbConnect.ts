@@ -17,7 +17,9 @@ async function dbConnect(): Promise<void> {
     // if there is not already a database connection, we need to create one
     try {
 
-        const db = await mongoose.connect(process.env.MONGODB_URI || '');
+        const db = await mongoose.connect(process.env.MONGODB_URI || '', {
+            maxPoolSize: 10
+        });
         connection.isConnected = db.connections[0].readyState
 
         console.log("DB Connected Successfully")
