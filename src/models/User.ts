@@ -1,11 +1,12 @@
-    import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
-    export interface User extends Document {
-        email: string,
-        password: string,
-        createdAt?: Date,
-        updatedAt?: Date
-    }
+export interface User {
+    _id?: mongoose.Types.ObjectId;
+    email: string,
+    password: string,
+    createdAt?: Date,
+    updatedAt?: Date
+}
 
 const userSchema = new Schema<User>(
     {
