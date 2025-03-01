@@ -25,9 +25,11 @@ function Register() {
         const response = await axios.post('/api/auth/register', {
           email, password
         })
+
+        console.log(response)
         
       } catch (error) {
-        
+        console.log(error)
       }
 
     }
