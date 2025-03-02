@@ -7,12 +7,19 @@ export async function POST(request: NextRequest) {
 
     try {
 
-        const { email, password } = await request.json();
+        const { email, password, confirmPassword } = await request.json();
 
-        if(!email || !password){
+        if(!email || !password || !confirmPassword ){
             return NextResponse.json(
-                { error: "Email and password are required" },
+                { error: "Required fields are missing" },
                 { status: 400 }
+            )
+        }
+
+        if(password !== confirmPassword){
+            return NextResponse.json(
+                { error : "Passwords do not match" },
+                { status : 400 }
             )
         }
 
