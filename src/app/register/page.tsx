@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, useForm } from 'react-hook-form'
 import { z } from "zod";
 import { Loader2 } from "lucide-react";
-import { toast } from "sonner"
+import { toast, Toaster } from 'sonner'
 
 function Register() {
 
@@ -36,16 +36,21 @@ function Register() {
     try {
 
       const response = await axios.post('/api/auth/register', data)
-      
-      router.push('/login')
+
+      toast.success(response?.data?.message, {
+        duration: 800,
+        onAutoClose: () => {
+          router.push('/login')
+        }
+      })
       
     } catch (error) {
 
       const axiosError = error as AxiosError<ErrorResponse>
       const errorMessage = axiosError.response?.data?.error
-      toast("Registration Failed", {
-        description: errorMessage
-      })
+
+      // add error toast here
+      toast.error(errorMessage)
 
     } finally {
       setIsSubmitting(false)
@@ -55,6 +60,7 @@ function Register() {
 
   return (
     <div className="max-w-md mx-auto">
+      <Toaster richColors />
       <h1 className="text-2xl font-bold mb-4">Register</h1>
 
       <form onSubmit={form.handleSubmit(handleUserRegistration)} className="space-y-4">
