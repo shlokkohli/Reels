@@ -1,15 +1,19 @@
 'use client'
 import { loginSchema } from '@/schema/loginSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import axios, { AxiosError } from 'axios'
 import { Loader2 } from 'lucide-react';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form'
+import { toast, Toaster } from 'sonner';
 import { z } from 'zod';
 
 function Login() {
+
+    interface ErrorResponse {
+        erorr: string
+    }
 
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -33,12 +37,15 @@ function Login() {
                 password: data.password
             })
 
-            console.log(response)
+            if(response?.error){
+                toast.error(response?.error)
+            } else {
+                toast.success("Login successful!")
+            }
             
         } catch (error) {
 
-            const axiosError = error as AxiosError
-            console.log(axiosError)
+            console.log("Unexpected Error", error)
             
         } finally {
             setIsSubmitting(false);
@@ -48,6 +55,7 @@ function Login() {
 
   return (
     <div className='max-w-md mx-auto'>
+        <Toaster richColors />
         <h1 className='text-2xl font-bold mb-4'>Login</h1>
 
         <form onSubmit={form.handleSubmit(handleUserLogin)} className='space-y-4'>
