@@ -5,7 +5,7 @@ import axios, { AxiosError } from 'axios'
 import Link from "next/link";
 import { signUpSchema } from "@/schema/signUpSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { z } from "zod";
 import { Loader2 } from "lucide-react";
 import { toast, Toaster } from 'sonner'
