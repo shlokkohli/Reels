@@ -76,7 +76,7 @@ export default function FileUpload({onSuccess, onProgress, fileType} : FIleUploa
           useUniqueFileName={true}
           validateFile={validateFile}
           
-          className="file-input file-input-bordered w-full"
+          className="file-input file-input-bordered rounded-lg w-full h-12"
 
           onError={onError}
           onSuccess={handleSuccess}

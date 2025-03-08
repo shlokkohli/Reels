@@ -60,6 +60,7 @@ export default function UploadVideoForm() {
             const axiosError = error as AxiosError<errorMessage>;
             const errorMessage = axiosError.response?.data?.error;
             toast.error(errorMessage);
+
         } finally {
             setIsSubmitting(false);
         }
@@ -143,6 +144,7 @@ export default function UploadVideoForm() {
                         'Publish Video'
                     )}
                 </button>
+                
             </form>
         </div>
     );
