@@ -2,9 +2,9 @@ import ImageKit from "imagekit"
 import { NextResponse } from "next/server";
 
 const imagekit = new ImageKit({
-  publicKey: process.env.IMAGE_KIT_PUBLIC_KEY!,
+  publicKey: process.env.NEXT_PUBLIC_PUBLIC_KEY!,
   privateKey: process.env.IMAGE_KIT_PRIVATE_KEY!,
-  urlEndpoint: process.env.IMAGE_KIT_URL_ENDPOINT!,
+  urlEndpoint: process.env.NEXT_PUBLIC_URL_ENDPOINT!,
 });
 
 export async function GET() {

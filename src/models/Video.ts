@@ -61,6 +61,6 @@ const videoSchema = new Schema<Video>(
     { timestamps: true }
 )
 
-const VideoModel = (mongoose.models.Videos as mongoose.Model<Video>) || mongoose.model<Video>("Video", videoSchema);
+const VideoModel = (mongoose.models.Video as mongoose.Model<Video>) || mongoose.model<Video>("Video", videoSchema);
 
 export default VideoModel;

@@ -3,6 +3,7 @@ import dbConnect from "@/utils/dbConnect";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../auth/[...nextauth]/options";
+import { Video } from '@/models/Video'
 
 // to get videos from the database
 export async function GET() {
@@ -36,9 +37,9 @@ export async function GET() {
 export async function POST(request : NextRequest) {
 
     try {
-        
-        const session = await getServerSession(authOptions)
 
+        // check if the user is authenticated (logged in)
+        const session = await getServerSession(authOptions)
         if(!session){
             return NextResponse.json(
                 { error : "Unauthorized" },
@@ -48,7 +49,29 @@ export async function POST(request : NextRequest) {
 
         await dbConnect();
 
+        // take the required data from the frontend
+        const videoData : Video = await request.json();
+
+        if(!videoData.title || !videoData.description || !videoData.videoURL || !videoData.thumbnailURL){
+            return NextResponse.json(
+                { error : "Missing required fields" },
+                { status : 400 }
+            )
+        }
+        
+        await VideoModel.create(videoData);
+
+        return NextResponse.json(
+            { message : " Video saved successfully"},
+            { status : 200 }
+        )
+
     } catch (error) {
+
+        NextResponse.json(
+            { error : "Failed to save video" },
+            { status : 500 }
+        )
         
     }
 }

@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef, useState } from "react";
-import { ImageKitProvider, IKUpload } from "imagekitio-next";
+import { IKUpload } from "imagekitio-next";
 import { Loader2 } from 'lucide-react'
 import { IKUploadResponse } from "imagekitio-next/dist/types/components/IKUpload/props";
 
@@ -22,7 +22,6 @@ export default function FileUpload({onSuccess, onProgress, fileType} : FIleUploa
   };
   
   const handleSuccess = (response : IKUploadResponse) => {
-    console.log("Success", response);
     setUploading(false)
     setError(null)
     onSuccess(response)
@@ -61,7 +60,7 @@ export default function FileUpload({onSuccess, onProgress, fileType} : FIleUploa
             return false
         }
         if(file.size > 5 * 1024 * 1024){
-            setError("Video must be less than 5 MB")
+            setError("Image must be less than 5 MB")
             return false;
         }
     }
