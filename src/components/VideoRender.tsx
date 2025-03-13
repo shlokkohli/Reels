@@ -1,9 +1,19 @@
+'use client'
+import { Video } from '@/models/Video'
+import { IKVideo } from 'imagekitio-next'
 import React from 'react'
 
-const VideoRender = () => {
+interface videoDataType {
+  video: Video
+}
+
+const VideoRender = ({video} : videoDataType) => {
+
+  console.log(video.videoURL)
+
   return (
     <div>
-      VideoRender
+      
     </div>
   )
 }
