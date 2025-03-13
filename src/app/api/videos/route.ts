@@ -62,7 +62,7 @@ export async function POST(request : NextRequest) {
         await VideoModel.create(videoData);
 
         return NextResponse.json(
-            { message : " Video saved successfully"},
+            { message : " Video uploaded successfully"},
             { status : 200 }
         )
 

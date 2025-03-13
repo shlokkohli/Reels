@@ -89,12 +89,12 @@ function Header() {
                     </>
                   ) : (
                     <li>
-                      <Link
+                      <a
                         href='/login'
                         className="px-4 py-2 hover:bg-base-200 block w-full"
                       >
                         Login
-                      </Link>
+                      </a>
                     </li>
                   )
                 }

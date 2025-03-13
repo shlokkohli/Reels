@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form'
 import { toast, Toaster } from 'sonner';
@@ -25,6 +26,8 @@ function Login() {
         }
     });
 
+    const router = useRouter();
+
     const handleUserLogin = async (data: z.infer<typeof loginSchema>) => {
 
         setIsSubmitting(true)
@@ -40,7 +43,10 @@ function Login() {
             if(response?.error){
                 toast.error(response?.error)
             } else {
-                toast.success("Login successful!")
+                toast.success("Login successful!", {
+                    duration: 1000,
+                })
+                router.push('/')
             }
             
         } catch (error) {

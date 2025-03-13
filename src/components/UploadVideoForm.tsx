@@ -10,6 +10,9 @@ export default function UploadVideoForm() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
 
+    // this is for the input box re render (brute force)
+    const [fileUploadKey, setFileUploadKey] = useState(0);
+
     interface VideoFormat {
         title: string,
         description: string,
@@ -60,6 +63,7 @@ export default function UploadVideoForm() {
             const axiosError = error as AxiosError<errorMessage>;
             const errorMessage = axiosError.response?.data?.error;
             toast.error(errorMessage);
+            console.log(form.formState.errors)
 
         } finally {
             setIsSubmitting(false);
@@ -67,12 +71,16 @@ export default function UploadVideoForm() {
         
     }
 
+    const handleInputReRender = () => {
+        setFileUploadKey(prevKey => prevKey + 1);
+    }
+
     return (
         <div className=" text-white p-8 max-w-2xl mx-auto">
             <h1 className="text-3xl font-bold mb-8">Upload New Reel</h1>
 
             <form onSubmit={form.handleSubmit(onFormSubmit)} className="space-y-6">
-                <Toaster position="top-right" />
+                <Toaster richColors />
 
                 {/* title */}
                 <div className="mb-6">
@@ -99,8 +107,11 @@ export default function UploadVideoForm() {
                         id="description"
                         rows={4}
                         className="w-full bg-gray-800 border-none rounded-lg p-4 text-white"
-                        {...form.register('description')}
+                        {...form.register('description', { required: "Description is required" })}
                     />
+                    {form.formState.errors.description && (
+                        <p className="text-red-500 text-sm">{form.formState.errors.description.message}</p>
+                    )}
                 </div>
 
                 {/* upload section */}
@@ -108,7 +119,7 @@ export default function UploadVideoForm() {
                     <label className="block mb-3">
                         Upload Video
                     </label>
-                    <div className="bg-gray-800 rounded-lg">
+                    <div className="bg-gray-800 rounded-lg" key={fileUploadKey}>
                         <FileUpload
                             fileType="video"
                             onSuccess={handleUploadSuccess}
@@ -118,7 +129,6 @@ export default function UploadVideoForm() {
                     
                     {uploadProgress > 0 && (
                         <div className="mt-3">
-                            <p className="text-indigo-400 mb-2">Uploading...</p>
                             <div className="w-full bg-gray-700 rounded-full h-2">
                                 <div
                                     className="bg-indigo-500 h-2 rounded-full transition-all duration-300"
@@ -134,6 +144,7 @@ export default function UploadVideoForm() {
                     type="submit"
                     className="w-full bg-indigo-500 hover:bg-indigo-600 text-white py-4 px-6 rounded-lg font-medium transition-colors"
                     disabled={isSubmitting}
+                    onClick={handleInputReRender}
                 >
                     {isSubmitting ? (
                         <>
